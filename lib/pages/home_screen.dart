@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:weather_ui/pages/detail_screen.dart';
 
 const List<String> list = ['Tanjungsiang, Subang', 'Selasa, Hujan petir'];
 
@@ -22,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
+        physics: NeverScrollableScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -152,7 +154,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Container(child: Image.asset("assets/1.png")),
+                        GestureDetector(
+                            onTap: () {
+                              Navigator.push<void>(
+                                context,
+                                MaterialPageRoute<void>(
+                                  builder: (BuildContext context) =>
+                                      const DetailScreen(),
+                                ),
+                              );
+                            },
+                            child:
+                                Container(child: Image.asset("assets/1.png"))),
                         Container(
                           margin: EdgeInsets.only(top: 12),
                           child: Column(
@@ -201,7 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 "Cuaca Per Jam",
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: 16,
+                    fontSize: 20,
                     fontWeight: FontWeight.w500),
               ),
             ),
@@ -253,12 +266,128 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(left: 20,top: 24),
+              margin: EdgeInsets.only(left: 20, top: 24),
               width: 60,
               height: 24,
               child: Text(
                 "Harian",
-                style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              ),
+            ),
+            Container(
+              width: 343,
+              height: 90,
+              margin: EdgeInsets.only(left: 20, top: 16),
+              decoration: BoxDecoration(
+                  color: Color(0xffF37E7E).withOpacity(0.2),
+                  image: DecorationImage(
+                      image: AssetImage("assets/pink-style.png"),
+                      fit: BoxFit.cover),
+                  borderRadius: BorderRadius.circular(12)),
+              child: Row(
+                children: [
+                  Container(
+                      width: 40,
+                      height: 40,
+                      margin: EdgeInsets.only(left: 16),
+                      child: Image.asset(
+                        "assets/heavy-showers-line.png",
+                        fit: BoxFit.cover,
+                      )),
+                  Column(
+                    children: [
+                      Container(
+                        width: 200,
+                        height: 36,
+                        margin: EdgeInsets.only(left: 16, top: 16),
+                        child: Text(
+                          "Cuaca esok hari kemungkinan akan terjadi hujan di siang hari",
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.w600),
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                      Container(
+                          width: 200,
+                          height: 16,
+                          margin: EdgeInsets.only(left: 16, top: 4),
+                          child: Text(
+                            "Jangan lupa bawa payung ya",
+                            style: TextStyle(
+                                fontSize: 13, fontWeight: FontWeight.w400),
+                            textAlign: TextAlign.start,
+                          )),
+                    ],
+                  )
+                ],
+              ),
+            ),
+            Container(
+              height: 200,
+              margin: EdgeInsets.only(left: 20, right: 27, top: 16),
+              child: ListView.builder(
+                // physics: NeverScrollableScrollPhysics(),
+                itemCount: 3,
+                shrinkWrap: true,
+                padding: EdgeInsets.all(0),
+                itemBuilder: (context, index) {
+                  return Container(
+                    width: 343,
+                    height: 72,
+                    margin: EdgeInsets.only(bottom: 12),
+                    decoration: BoxDecoration(
+                        color: Color(0xffD2DFFF),
+                        borderRadius: BorderRadius.circular(12)),
+                    child: Row(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(
+                            left: 16,
+                          ),
+                          alignment: Alignment.center,
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage("assets/1.png")),
+                              shape: BoxShape.circle,
+                              color: Color(0xff9AB6FF)),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 16, top: 16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Selesa",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Container(
+                                  margin: EdgeInsets.only(top: 4),
+                                  child: Text("Hujan petir"))
+                            ],
+                          ),
+                        ),
+                        Container(
+                            width: 65,
+                            height: 20,
+                            margin: EdgeInsets.only(left: 115),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "19º C",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14),
+                                ),
+                                Image.asset("assets/coolicon-right.png")
+                              ],
+                            ))
+                      ],
+                    ),
+                  );
+                },
               ),
             )
           ],

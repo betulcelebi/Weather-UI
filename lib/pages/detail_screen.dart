@@ -200,8 +200,36 @@ class _DetailScreenState extends State<DetailScreen> {
               child: Row(
                 children: [
                   Container(
+                    width: 80,
+                    height: 80,
+                    child: Stack(
+                      children: [
+                        Center(
+                          child: Text(
+                            "12",
+                            style: TextStyle(color: Colors.green, fontSize: 18),
+                          ),
+                        ),
+                        Center(
+                          child: Container(
+                           // color: Colors.yellow,
+                            height: 67,
+                            width: 67,
+                            margin: EdgeInsets.only(left: 5),
+                            child: CircularProgressIndicator(
+                              backgroundColor: Colors.grey.withOpacity(0.4),
+                              color: Colors.green[600],
+                              value: 0.12,
+                              strokeWidth: 6,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
                     height: 85,
-                    margin: EdgeInsets.only(left: 90),
+                    margin: EdgeInsets.only(left: 15,top: 5),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,

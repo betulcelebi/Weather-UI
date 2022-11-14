@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 class DetailScreen extends StatefulWidget {
   const DetailScreen({super.key});
@@ -10,9 +11,23 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
+    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+ 
+  final GlobalKey _third = GlobalKey();
+
+
+   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => ShowCaseWidget.of(context)
+          .startShowCase([ _third, ]),  
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         physics: NeverScrollableScrollPhysics(),
@@ -113,7 +128,10 @@ class _DetailScreenState extends State<DetailScreen> {
                                     color: Colors.white,
                                     fontWeight: FontWeight.w400),
                               ),
-                              Image.asset("assets/refresh.png")
+                              Showcase(
+                                key: _third,
+                                description: "Refresh page",
+                                child: Image.asset("assets/refresh.png"))
                             ],
                           ),
                         )

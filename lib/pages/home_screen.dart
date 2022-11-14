@@ -1,14 +1,16 @@
 import 'dart:ui';
 
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:weather_ui/pages/detail_screen.dart';
 
 const List<String> list = ['Tanjungsiang, Subang', 'Selasa, Hujan petir'];
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -18,9 +20,25 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isVisible = false;
   TextEditingController controller = TextEditingController();
   String dropdownValue = list.first;
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey _first = GlobalKey();
+  final GlobalKey _second = GlobalKey();
+
+
+   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => ShowCaseWidget.of(context)
+          .startShowCase([_first, _second]),  
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         physics: NeverScrollableScrollPhysics(),
@@ -39,7 +57,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Image.asset("assets/coolicon.png"),
+                      Showcase(
+                        key: _first,
+                        description: 'Press here to open location',
+                        child: Image.asset("assets/coolicon.png")),
                       DropdownButton<String>(
                         value: dropdownValue,
                         icon: Image.asset("assets/caret_down.png"),
@@ -103,9 +124,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 isVisible = !isVisible;
                               });
                             },
-                            child: Image.asset(
-                              "assets/search.png",
-                              width: 25,
+                            child: Showcase(
+                              key: _second,
+                              description: "Search button",
+                              child: Image.asset(
+                                "assets/search.png",
+                                width: 25,
+                              ),
                             ))
                       ],
                     )),
@@ -129,22 +154,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     margin: EdgeInsets.only(top: 24, left: 24),
                     width: 295,
                     height: 17,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Senin, 20 Desember 2021",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
-                        ),
-                        Text("3.30 PM",
+                    child: FadeInLeft(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Senin, 20 Desember 2021",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 14,
-                                fontWeight: FontWeight.w400))
-                      ],
+                                fontWeight: FontWeight.w400),
+                          ),
+                          Text("3.30 PM",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400))
+                        ],
+                      ),
                     ),
                   ),
                   Container(
@@ -160,30 +187,34 @@ class _HomeScreenState extends State<HomeScreen> {
                                 context,
                                 MaterialPageRoute<void>(
                                   builder: (BuildContext context) =>
-                                      const DetailScreen(),
+                                      ShowCaseWidget(
+                                        builder: Builder(builder: ((context) =>  DetailScreen())),
+                                         ),
                                 ),
                               );
                             },
                             child:
-                                Container(child: Image.asset("assets/1.png"))),
+                                Container(child: FadeInDown(child: Image.asset("assets/1.png")))),
                         Container(
                           margin: EdgeInsets.only(top: 12),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("18º C",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400)),
-                              Container(
-                                  margin: EdgeInsets.only(top: 8),
-                                  child: Text("Hujan Berawan",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w600)))
-                            ],
+                          child: FadeInLeft(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("18º C",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400)),
+                                Container(
+                                    margin: EdgeInsets.only(top: 8),
+                                    child: Text("Hujan Berawan",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600)))
+                              ],
+                            ),
                           ),
                         )
                       ],
@@ -193,16 +224,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: 155,
                     height: 17,
                     margin: EdgeInsets.only(left: 24),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Terakhir update 3.00 PM",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400)),
-                        Image.asset("assets/refresh.png")
-                      ],
+                    child: FadeInLeft(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Terakhir update 3.00 PM",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400)),
+                          Image.asset("assets/refresh.png")
+                        ],
+                      ),
                     ),
                   ),
                 ],

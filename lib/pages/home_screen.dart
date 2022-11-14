@@ -1,9 +1,6 @@
-import 'dart:ui';
-
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:provider/provider.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:weather_ui/pages/detail_screen.dart';
@@ -27,17 +24,13 @@ class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey _first = GlobalKey();
   final GlobalKey _second = GlobalKey();
 
-
-
-   @override
+  @override
   void initState() {
-    
     super.initState();
-    final wetProvider =Provider.of<WeatherProvider>(context, listen:false );
+    final wetProvider = Provider.of<WeatherProvider>(context, listen: false);
     wetProvider.getWeatherData(context);
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) => ShowCaseWidget.of(context)
-          .startShowCase([_first, _second]),  
+      (_) => ShowCaseWidget.of(context).startShowCase([_first, _second]),
     );
   }
 
@@ -64,9 +57,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Showcase(
-                        key: _first,
-                        description: 'Press here to open location',
-                        child: Image.asset("assets/coolicon.png")),
+                          key: _first,
+                          description: 'Press here to open location',
+                          child: Image.asset("assets/coolicon.png")),
                       DropdownButton<String>(
                         value: dropdownValue,
                         icon: Image.asset("assets/caret_down.png"),
@@ -194,13 +187,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                 MaterialPageRoute<void>(
                                   builder: (BuildContext context) =>
                                       ShowCaseWidget(
-                                        builder: Builder(builder: ((context) =>  DetailScreen())),
-                                         ),
+                                    builder: Builder(
+                                        builder: ((context) => DetailScreen())),
+                                  ),
                                 ),
                               );
                             },
                             child:
-                                Container(child: FadeInDown(child: Image.asset("assets/1.png")))),
+                                FadeInDown(child: Image.asset("assets/1.png"))),
                         Container(
                           margin: EdgeInsets.only(top: 12),
                           child: FadeInLeft(

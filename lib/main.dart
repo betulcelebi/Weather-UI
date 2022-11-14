@@ -7,7 +7,8 @@ import 'package:weather_ui/providers/weather_provider.dart';
 void main() {
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider<WeatherProvider>(create: (_) => WeatherProvider())
+      ChangeNotifierProvider<WeatherProvider>(
+          create: (context) => WeatherProvider())
     ],
     child: const MyApp(),
   ));
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: ShowCaseWidget(
-          builder: Builder(builder: (context) => HomeScreen()),
+          builder: Builder(builder: (context) => const HomeScreen()),
         ));
   }
 }

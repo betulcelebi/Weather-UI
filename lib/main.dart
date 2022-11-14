@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:weather_ui/pages/home_screen.dart';
+import 'package:weather_ui/providers/weather_provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider<WeatherProvider>(create: (_) => WeatherProvider())
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -13,11 +20,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: ShowCaseWidget(
-        builder: Builder(builder: (context)=>HomeScreen()),
-       // child: const HomeScreen()),
-    ));
+        debugShowCheckedModeBanner: false,
+        home: ShowCaseWidget(
+          builder: Builder(builder: (context) => HomeScreen()),
+        ));
   }
 }
 

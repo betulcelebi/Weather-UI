@@ -4,8 +4,10 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:weather_ui/pages/detail_screen.dart';
+import 'package:weather_ui/providers/weather_provider.dart';
 
 const List<String> list = ['Tanjungsiang, Subang', 'Selasa, Hujan petir'];
 
@@ -26,9 +28,13 @@ class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey _second = GlobalKey();
 
 
+
    @override
   void initState() {
+    
     super.initState();
+    final wetProvider =Provider.of<WeatherProvider>(context, listen:false );
+    wetProvider.getWeatherData(context);
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => ShowCaseWidget.of(context)
           .startShowCase([_first, _second]),  

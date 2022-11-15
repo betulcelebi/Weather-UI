@@ -8,7 +8,7 @@ void main() {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider<WeatherProvider>(
-          create: (context) => WeatherProvider())
+          create: (_) => WeatherProvider())
     ],
     child: const MyApp(),
   ));

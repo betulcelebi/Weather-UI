@@ -24,14 +24,20 @@ class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey _first = GlobalKey();
   final GlobalKey _second = GlobalKey();
 
+   WeatherProvider? wetProvider;
+
   @override
   void initState() {
     super.initState();
-    final wetProvider = Provider.of<WeatherProvider>(context, listen: false);
-    wetProvider.getWeatherData(context);
-    WidgetsBinding.instance.addPostFrameCallback(
+
+  
+
+    /*WidgetsBinding.instance.addPostFrameCallback(
       (_) => ShowCaseWidget.of(context).startShowCase([_first, _second]),
-    );
+    );*/
+      wetProvider = Provider.of<WeatherProvider>(context, listen: false);
+     wetProvider!.getWeatherData(context);
+ 
   }
 
   @override
@@ -106,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: TextField(
                                   controller: controller,
                                   autofocus: false,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     enabledBorder: UnderlineInputBorder(
                                       borderSide:
                                           BorderSide(color: Colors.transparent),
@@ -135,111 +141,117 @@ class _HomeScreenState extends State<HomeScreen> {
                     )),
               ],
             ),
-            Container(
-              width: 350,
-              height: 193,
-              margin: EdgeInsets.only(top: 24, left: 20),
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      colors: [Color(0xff4F7FFA), Color(0xff335FD1)]),
-                  borderRadius: BorderRadius.circular(14)),
-              child: Column(
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+            Consumer(
+              builder: (context, WeatherProvider value, child) { return value.isLoading== true? Center(child: CircularProgressIndicator()):
                   Container(
-                    margin: EdgeInsets.only(top: 24, left: 24),
-                    width: 295,
-                    height: 17,
-                    child: FadeInLeft(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Senin, 20 Desember 2021",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
+                  width: 350,
+                  height: 193,
+                  margin: EdgeInsets.only(top: 24, left: 20),
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [Color(0xff4F7FFA), Color(0xff335FD1)]),
+                      borderRadius: BorderRadius.circular(14)),
+                  child: Column(
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(top: 24, left: 24),
+                        width: 295,
+                        height: 17,
+                        child: FadeInLeft(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Senin, 20 December 2021",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                              Text(value.response.sys!.country.toString(),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400))
+                            ],
                           ),
-                          Text("3.30 PM",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400))
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                  Container(
-                    width: 250,
-                    height: 90,
-                    margin: EdgeInsets.only(top: 24, right: 90),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        GestureDetector(
-                            onTap: () {
-                              Navigator.push<void>(
-                                context,
-                                MaterialPageRoute<void>(
-                                  builder: (BuildContext context) =>
-                                      ShowCaseWidget(
-                                    builder: Builder(
-                                        builder: ((context) => DetailScreen())),
-                                  ),
-                                ),
-                              );
-                            },
-                            child:
-                                FadeInDown(child: Image.asset("assets/1.png"))),
-                        Container(
-                          margin: EdgeInsets.only(top: 12),
-                          child: FadeInLeft(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("18º C",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400)),
-                                Container(
-                                    margin: EdgeInsets.only(top: 8),
-                                    child: Text("Hujan Berawan",
+                      Container(
+                        width: 250,
+                        height: 90,
+                        margin: EdgeInsets.only(top: 24, right: 90),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            GestureDetector(
+                                onTap: () {
+                                  Navigator.push<void>(
+                                    context,
+                                    MaterialPageRoute<void>(
+                                      builder: (BuildContext context) =>
+                                          ShowCaseWidget(
+                                        builder: Builder(
+                                            builder: ((context) =>
+                                                DetailScreen())),
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: FadeInDown(
+                                    child: Image.asset("assets/1.png"))),
+                            Container(
+                              margin: EdgeInsets.only(top: 12),
+                              child: FadeInLeft(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("18º C",
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 16,
-                                            fontWeight: FontWeight.w600)))
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    width: 155,
-                    height: 17,
-                    margin: EdgeInsets.only(left: 24),
-                    child: FadeInLeft(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Terakhir update 3.00 PM",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400)),
-                          Image.asset("assets/refresh.png")
-                        ],
+                                            fontWeight: FontWeight.w400)),
+                                   Container(
+                                        margin: EdgeInsets.only(top: 8),
+                                        child: Text(
+                                            value.response.name.toString(),
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600)))
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
+                      Container(
+                        width: 155,
+                        height: 17,
+                        margin: EdgeInsets.only(left: 24),
+                        child: FadeInLeft(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Terakhir update 3.00 PM",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400)),
+                              Image.asset("assets/refresh.png")
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                );
+              },
             ),
             Container(
               margin: EdgeInsets.only(top: 24, left: 20),

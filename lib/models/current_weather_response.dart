@@ -1,6 +1,6 @@
 // ignore_for_file: camel_case_types
 
-class currentWeatherResponse {
+class CurrentWeatherResponse {
   Coord? coord;
   List<Weather>? weather;
   String? base;
@@ -15,7 +15,7 @@ class currentWeatherResponse {
   String? name;
   int? cod;
 
-  currentWeatherResponse(
+  CurrentWeatherResponse(
       {this.coord,
       this.weather,
       this.base,
@@ -30,7 +30,7 @@ class currentWeatherResponse {
       this.name,
       this.cod});
 
-  currentWeatherResponse.fromJson(Map<String, dynamic> json) {
+  CurrentWeatherResponse.fromJson(Map<String, dynamic> json) {
     coord = json['coord'] != null ? new Coord.fromJson(json['coord']) : null;
     if (json['weather'] != null) {
       weather = <Weather>[];
@@ -165,8 +165,8 @@ class Main {
 }
 
 class Wind {
-  int? speed;
-  int? deg;
+  dynamic? speed;
+  dynamic? deg;
 
   Wind({this.speed, this.deg});
 

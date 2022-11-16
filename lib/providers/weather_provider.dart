@@ -8,6 +8,8 @@ class WeatherProvider with ChangeNotifier {
   CurrentWeatherResponse response = CurrentWeatherResponse();
 
   bool isLoading = true;
+  String newDate="2022-11-10"
+;
   getWeatherData(context) async {
     isLoading = true;
     //await Duration(milliseconds: 20);

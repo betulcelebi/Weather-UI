@@ -30,9 +30,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
 
-    /*WidgetsBinding.instance.addPostFrameCallback(
+    WidgetsBinding.instance.addPostFrameCallback(
       (_) => ShowCaseWidget.of(context).startShowCase([_first, _second]),
-    );*/
+    );
     wetProvider = Provider.of<WeatherProvider>(context, listen: false);
     wetProvider!.getWeatherData(context);
     wetProvider!.getHourlyWeatherData(context);
@@ -166,12 +166,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      "Senin, 20 December 2021",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          value.newDate.split(" ").first.substring(0,10),
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                        SizedBox(width: 10.0,),
+                                        Text(
+                                           value.newDate.split(" ").last.substring(0,5),
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400),
+                                        )
+                                      ],
                                     ),
                                     Text(value.response.sys!.country.toString(),
                                         style: TextStyle(
@@ -214,9 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         children: [
                                           Text(
                                               value.response.main!.temp
-                                                      .toString()
-                                                      .split(" ")
-                                                      .last +
+                                                      .toString() +
                                                   " C°",
                                               style: TextStyle(
                                                   color: Colors.white,
@@ -275,21 +285,23 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Consumer(
-              builder: (context, WeatherProvider hvalue, child) {
+              builder: (context, WeatherProvider value, child) {
                 return Container(
                   height: 115,
                   margin: EdgeInsets.only(left: 20),
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: hvalue.hourlyResponse.list?.length,
+                    itemCount: value.hourlyResponse.list?.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
-                          hvalue.response.main!.temp =
-                              hvalue.hourlyResponse.list![index].main!.temp;
-                          hvalue.response.weather!.first.main = hvalue
+                         
+                          value.newDate=value.hourlyResponse.list![index].dtTxt!;
+                          value.response.main!.temp =
+                              value.hourlyResponse.list![index].main!.temp;
+                          value.response.weather!.first.main = value
                               .hourlyResponse.list![index].weather!.first.main;
-                          hvalue.notifyListeners();
+                          value.notifyListeners();
                         },
                         child: Container(
                           //color: Colors.red,
@@ -315,7 +327,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   alignment: Alignment.center,
                                   margin: EdgeInsets.only(top: 4),
                                   child: Text(
-                                    "${hvalue.hourlyResponse.list?[index].main?.temp ?? ""}",
+                                    "${value.hourlyResponse.list?[index].main?.temp ?? ""}",
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600),
@@ -323,7 +335,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Container(
                                   margin: EdgeInsets.only(top: 8),
                                   child: Text(
-                                    hvalue.hourlyResponse.list?[index].dtTxt
+                                    value.hourlyResponse.list?[index].dtTxt
                                             ?.split(" ")
                                             .last
                                             .substring(0, 5) ??

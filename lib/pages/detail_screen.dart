@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
 import 'package:showcaseview/showcaseview.dart';
+import 'package:weather_ui/providers/weather_provider.dart';
 
 class DetailScreen extends StatefulWidget {
   const DetailScreen({super.key});
@@ -94,12 +96,17 @@ class _DetailScreenState extends State<DetailScreen> {
                             Positioned(
                               bottom: 0,
                               left: 48,
-                              child: Text(
-                                "18º C",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w400),
+                              child: Consumer(
+                                builder: (context, WeatherProvider dhour, child) {
+                                   return Text(
+                                  dhour.response.main!.temp.toString(),
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w400),
+                                );
+                                },
+                               
                               ),
                             ),
                           ],

@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:weather_ui/pages/detail_screen.dart';
+import 'package:weather_ui/pages/home_screen.dart';
 import 'package:weather_ui/providers/weather_provider.dart';
+
+import 'home_screen.dart';
 
 const List<String> list = ['Tanjungsiang, Subang', 'Selasa, Hujan petir'];
 
@@ -169,16 +172,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Row(
                                       children: [
                                         Text(
-                                          value.newDate.split(" ").first.substring(0,10),
+                                          value.newDate
+                                              .split(" ")
+                                              .first
+                                              .substring(0, 10),
                                           style: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 14,
                                               fontWeight: FontWeight.w400),
                                         ),
-                                        const SizedBox(width: 10.0,),
+                                        const SizedBox(
+                                          width: 10.0,
+                                        ),
                                         Text(
-                                           value.newDate.split(" ").last.substring(0,5),
-                                          style:const  TextStyle(
+                                          value.newDate
+                                              .split(" ")
+                                              .last
+                                              .substring(0, 5),
+                                          style: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 14,
                                               fontWeight: FontWeight.w400),
@@ -216,7 +227,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         );
                                       },
                                       child: FadeInDown(
-                                          child: Image.network("http://openweathermap.org/img/wn/${value.clockIcon??"10d"}@2x.png"))),
+                                          child: Image.network(
+                                              "http://openweathermap.org/img/wn/${value.clockIcon ?? "10d"}@2x.png"))),
                                   Container(
                                     margin: EdgeInsets.only(top: 12),
                                     child: FadeInLeft(
@@ -251,8 +263,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             Container(
-                              width: 70,
-                              height: 17,
+                              width: 80,
+                              height: 20,
                               margin: EdgeInsets.only(left: 24),
                               child: FadeInLeft(
                                 child: Row(
@@ -262,7 +274,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Text(value.response.name.toString(),
                                         style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: 12,
+                                            fontSize: 15,
                                             fontWeight: FontWeight.w400)),
                                     Image.asset("assets/refresh.png")
                                   ],
@@ -293,12 +305,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     scrollDirection: Axis.horizontal,
                     itemCount: value.hourlyResponse.list?.length,
                     itemBuilder: (context, index) {
-                      
                       return GestureDetector(
                         onTap: () {
-                          value.clockIcon= value.hourlyResponse.list![index].weather?.first.icon!;
-                         
-                          value.newDate=value.hourlyResponse.list![index].dtTxt!;
+                          value.clockIcon = value
+                              .hourlyResponse.list![index].weather?.first.icon!;
+
+                          value.newDate =
+                              value.hourlyResponse.list![index].dtTxt!;
                           value.response.main!.temp =
                               value.hourlyResponse.list![index].main!.temp;
                           value.response.weather!.first.main = value
@@ -323,7 +336,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   margin: EdgeInsets.only(top: 8),
 
                                   //color: Colors.red,
-                                  child: Image.network("http://openweathermap.org/img/wn/${value.hourlyResponse.list?[index].weather?.first.icon??"10d"}@2x.png")),
+                                  child: Image.network(
+                                      "http://openweathermap.org/img/wn/${value.hourlyResponse.list?[index].weather?.first.icon ?? "10d"}@2x.png")),
                               Container(
                                   alignment: Alignment.center,
                                   margin: EdgeInsets.only(top: 4),

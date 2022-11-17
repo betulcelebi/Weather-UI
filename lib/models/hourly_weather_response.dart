@@ -1,7 +1,7 @@
 class HourlyWeatherResponse {
   String? cod;
-  dynamic message;
-  dynamic cnt;
+  dynamic? message;
+  dynamic? cnt;
   List<Lista>? list;
   City? city;
 
@@ -37,12 +37,12 @@ class HourlyWeatherResponse {
 }
 
 class Lista {
-  dynamic dt;
+  dynamic? dt;
   Main? main;
   List<Weather>? weather;
   Clouds? clouds;
   Wind? wind;
-  dynamic visibility;
+  dynamic? visibility;
   dynamic? pop;
   Rain? rain;
   Sys? sys;
@@ -111,10 +111,10 @@ class Main {
   dynamic? feelsLike;
   dynamic? tempMin;
   dynamic? tempMax;
-  dynamic pressure;
-  dynamic seaLevel;
-  dynamic grndLevel;
-  dynamic humidity;
+  dynamic? pressure;
+  dynamic? seaLevel;
+  dynamic? grndLevel;
+  dynamic? humidity;
   dynamic? tempKf;
 
   Main(
@@ -156,7 +156,7 @@ class Main {
 }
 
 class Weather {
-  dynamic id;
+  dynamic? id;
   String? main;
   String? description;
   String? icon;
@@ -181,7 +181,7 @@ class Weather {
 }
 
 class Clouds {
-  dynamic all;
+  dynamic? all;
 
   Clouds({this.all});
 
@@ -198,7 +198,7 @@ class Clouds {
 
 class Wind {
   dynamic? speed;
-  dynamic deg;
+  dynamic? deg;
   dynamic? gust;
 
   Wind({this.speed, this.deg, this.gust});
@@ -251,14 +251,14 @@ class Sys {
 }
 
 class City {
-  dynamic id;
+  dynamic? id;
   String? name;
   Coord? coord;
   String? country;
-  dynamic population;
-  dynamic timezone;
-  dynamic sunrise;
-  dynamic sunset;
+  dynamic? population;
+  dynamic? timezone;
+  dynamic? sunrise;
+  dynamic? sunset;
 
   City(
       {this.id,

@@ -170,15 +170,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                       children: [
                                         Text(
                                           value.newDate.split(" ").first.substring(0,10),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 14,
                                               fontWeight: FontWeight.w400),
                                         ),
-                                        SizedBox(width: 10.0,),
+                                        const SizedBox(width: 10.0,),
                                         Text(
                                            value.newDate.split(" ").last.substring(0,5),
-                                          style: TextStyle(
+                                          style:const  TextStyle(
                                               color: Colors.white,
                                               fontSize: 14,
                                               fontWeight: FontWeight.w400),
@@ -216,7 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         );
                                       },
                                       child: FadeInDown(
-                                          child: Image.asset("assets/1.png"))),
+                                          child: Image.network("http://openweathermap.org/img/wn/${value.clockIcon??"10d"}@2x.png"))),
                                   Container(
                                     margin: EdgeInsets.only(top: 12),
                                     child: FadeInLeft(
@@ -293,8 +293,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     scrollDirection: Axis.horizontal,
                     itemCount: value.hourlyResponse.list?.length,
                     itemBuilder: (context, index) {
+                      
                       return GestureDetector(
                         onTap: () {
+                          value.clockIcon= value.hourlyResponse.list![index].weather?.first.icon!;
                          
                           value.newDate=value.hourlyResponse.list![index].dtTxt!;
                           value.response.main!.temp =
@@ -321,8 +323,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   margin: EdgeInsets.only(top: 8),
 
                                   //color: Colors.red,
-                                  child: Image.asset("assets/1.png",
-                                      fit: BoxFit.cover)),
+                                  child: Image.network("http://openweathermap.org/img/wn/${value.hourlyResponse.list?[index].weather?.first.icon??"10d"}@2x.png")),
                               Container(
                                   alignment: Alignment.center,
                                   margin: EdgeInsets.only(top: 4),

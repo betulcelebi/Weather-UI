@@ -99,7 +99,7 @@ class _DetailScreenState extends State<DetailScreen> {
                               child: Consumer(
                                 builder: (context, WeatherProvider dhour, child) {
                                    return Text(
-                                  dhour.response.main!.temp.toString(),
+                                  dhour.response!.main!.temp.toString(),
                                   style: TextStyle(
                                       fontSize: 20,
                                       color: Colors.white,

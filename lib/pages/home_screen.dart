@@ -33,10 +33,16 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) => ShowCaseWidget.of(context).startShowCase([_first, _second]),
-    );
+    // WidgetsBinding.instance.addPostFrameCallback(
+    //   (_) => ShowCaseWidget.of(context).startShowCase([_first, _second]),
+    // );
     wetProvider = Provider.of<WeatherProvider>(context, listen: false);
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
     wetProvider!.getWeatherData(context);
     wetProvider!.getHourlyWeatherData(context);
   }
@@ -196,7 +202,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                         )
                                       ],
                                     ),
-                                    Text(value.response.sys!.country.toString(),
+                                    Text(
+                                        value.response!.sys!.country!
+                                            .toString(),
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 14,
@@ -237,7 +245,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                              value.response.main!.temp
+                                              value.response!.main!.temp
                                                       .toString() +
                                                   " C°",
                                               style: TextStyle(
@@ -247,7 +255,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           Container(
                                               margin: EdgeInsets.only(top: 8),
                                               child: Text(
-                                                  value.response.weather!.last
+                                                  value.response!.weather!.last
                                                       .main
                                                       .toString(),
                                                   style: TextStyle(
@@ -271,7 +279,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(value.response.name.toString(),
+                                    Text(value.response!.name.toString(),
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 15,
@@ -303,19 +311,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   margin: EdgeInsets.only(left: 20),
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: value.hourlyResponse.list?.length,
+                    itemCount: value.hourlyResponse?.list?.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
-                          value.clockIcon = value
-                              .hourlyResponse.list![index].weather?.first.icon!;
+                          value.clockIcon = value.hourlyResponse?.list![index]
+                              .weather?.first.icon!;
 
                           value.newDate =
-                              value.hourlyResponse.list![index].dtTxt!;
-                          value.response.main!.temp =
-                              value.hourlyResponse.list![index].main!.temp;
-                          value.response.weather!.first.main = value
-                              .hourlyResponse.list![index].weather!.first.main;
+                              value.hourlyResponse!.list![index].dtTxt!;
+                          value.response!.main!.temp =
+                              value.hourlyResponse!.list![index].main!.temp;
+                          value.response!.weather!.first.main = value
+                              .hourlyResponse!.list![index].weather!.first.main;
                           value.notifyListeners();
                         },
                         child: Container(
@@ -337,12 +345,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                   //color: Colors.red,
                                   child: Image.network(
-                                      "http://openweathermap.org/img/wn/${value.hourlyResponse.list?[index].weather?.first.icon ?? "10d"}@2x.png")),
+                                      "http://openweathermap.org/img/wn/${value.hourlyResponse?.list?[index].weather?.first.icon ?? "10d"}@2x.png")),
                               Container(
                                   alignment: Alignment.center,
                                   margin: EdgeInsets.only(top: 4),
                                   child: Text(
-                                    "${value.hourlyResponse.list?[index].main?.temp ?? ""}",
+                                    "${value.hourlyResponse?.list?[index].main?.temp ?? ""}",
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600),
@@ -350,7 +358,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Container(
                                   margin: EdgeInsets.only(top: 8),
                                   child: Text(
-                                    value.hourlyResponse.list?[index].dtTxt
+                                    value.hourlyResponse?.list?[index].dtTxt
                                             ?.split(" ")
                                             .last
                                             .substring(0, 5) ??

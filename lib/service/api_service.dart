@@ -1,66 +1,40 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:weather_ui/models/hourly_weather_response.dart';
+import 'package:weather_ui/service/logging.dart';
 
 import '../models/current_weather_response.dart';
 import 'package:dio/dio.dart';
 
+final Dio _dio = Dio(BaseOptions(
+    baseUrl: "https://api.openweathermap.org/data/2.5/",
+    connectTimeout: 5000,
+    receiveTimeout: 3000))
+  ..interceptors.add(Logging());
+
 Future<CurrentWeatherResponse?> getCurrentData(context) async {
-  // final response = await Dio().get(
-  //     'https://api.openweathermap.org/data/2.5/weather?lat=41.875732&lon=-87.623766&appid=ca76f2c0423e08ef8e032a11479e5a2d&units=metric');
-  // print(response);
-
-  Response response = await Dio()
-      .get('https://api.openweathermap.org/data/2.5/weather', queryParameters: {
-    'lat': 41.875732,
-    'lon': -87.623766,
-    'appid': "${"ca76f2c0423e08ef8e032a11479e5a2d"}",
-    'units': "metric"
-  });
-  print(response.data.toString());
-
-  if (response.statusCode == 200) {
-    return CurrentWeatherResponse.fromJson(response.data);
+  CurrentWeatherResponse? weatherResponse;
+  try {
+    final response = await _dio.get(
+        "weather?lat=41.875732&lon=-87.623766&appid=ca76f2c0423e08ef8e032a11479e5a2d&units=metric");
+    print(response.data);
+    weatherResponse = CurrentWeatherResponse.fromJson(response.data);
+    return weatherResponse;
+  } catch (e) {
+    log(e.toString());
   }
-
-  // final response = await Dio().get(
-  //     "https://api.openweathermap.org/data/2.5/weather?lat=41.875732&lon=-87.623766&appid=ca76f2c0423e08ef8e032a11479e5a2d&units=metric");
-  //     print(response);
-  // if (response.statusCode == 200) {
-  //   weatherResponse =
-  //       CurrentWeatherResponse.fromJson(jsonDecode(response.data));
-  //   return weatherResponse;
-  // }
-
-  // return null;
+  return null;
 }
 
 Future<HourlyWeatherResponse?> getHourlyData(context) async {
-  // final response = await Dio().get(
-  //     'https://api.openweathermap.org/data/2.5/forecast?lat=44.34&lon=10.99&appid=ca76f2c0423e08ef8e032a11479e5a2d&units=metric');
-  // print(response);
-
-  Response response = await Dio()
-      .get('https://api.openweathermap.org/data/2.5/forecast', queryParameters: {
-    'lat': 44.34,
-    'lon': 10.99,
-    'appid': "${"ca76f2c0423e08ef8e032a11479e5a2d"}",
-    'units': "metric"
-  });
-  print(response.data.toString());
-
-  if (response.statusCode == 200) {
-    return HourlyWeatherResponse.fromJson(response.data);
+  HourlyWeatherResponse? weatherResponse;
+  try {
+    final response = await _dio.get(
+        "forecast?lat=44.34&lon=10.99&appid=ca76f2c0423e08ef8e032a11479e5a2d&units=metric");
+    weatherResponse = HourlyWeatherResponse.fromJson(response.data);
+    return weatherResponse;
+  } catch (e) {
+    log(e.toString());
   }
-
-  // final response = await Dio().get(
-  //     "https://api.openweathermap.org/data/2.5/forecast?lat=44.34&lon=10.99&appid=ca76f2c0423e08ef8e032a11479e5a2d&units=metric");
-
-  // if (response.statusCode == 200) {
-  //   weatherResponse = HourlyWeatherResponse.fromJson(jsonDecode(response.data));
-  //   return weatherResponse;
-  // }
-
-  // return null;
+  return null;
 }

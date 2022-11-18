@@ -21,7 +21,7 @@ class HourlyWeatherResponse {
     city = json['city'] != null ? City.fromJson(json['city']) : null;
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson(data) {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['cod'] = cod;
     data['message'] = message;

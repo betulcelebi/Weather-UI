@@ -37,15 +37,17 @@ class _HomeScreenState extends State<HomeScreen> {
     //   (_) => ShowCaseWidget.of(context).startShowCase([_first, _second]),
     // );
     wetProvider = Provider.of<WeatherProvider>(context, listen: false);
-  }
-
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-    wetProvider!.getWeatherData(context);
+     wetProvider!.getWeatherData(context);
     wetProvider!.getHourlyWeatherData(context);
   }
+
+  // @override
+  // void didChangeDependencies() {
+  //   // TODO: implement didChangeDependencies
+  //   super.didChangeDependencies();
+  //   wetProvider!.getWeatherData(context);
+  //   wetProvider!.getHourlyWeatherData(context);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -203,7 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ],
                                     ),
                                     Text(
-                                        value.response!.sys!.country!
+                                        value.response!.sys!.country
                                             .toString(),
                                         style: TextStyle(
                                             color: Colors.white,
@@ -310,6 +312,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 115,
                   margin: EdgeInsets.only(left: 20),
                   child: ListView.builder(
+                   // shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     itemCount: value.hourlyResponse?.list?.length,
                     itemBuilder: (context, index) {

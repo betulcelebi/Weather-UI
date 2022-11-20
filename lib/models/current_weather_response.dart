@@ -81,6 +81,8 @@ class CurrentWeatherResponse {
     data['cod'] = this.cod;
     return data;
   }
+
+  void snackbar(String s, String t) {}
 }
 
 class Coord {

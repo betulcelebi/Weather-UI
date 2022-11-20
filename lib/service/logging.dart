@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 
 class Logging extends Interceptor {
+  Response? get response => null;
+
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     print("REQUEST  ${options.method} => ${options.path}");
@@ -9,8 +11,6 @@ class Logging extends Interceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-
-    
     print(
         "RESPONSE  ${response.statusCode} => ${response.requestOptions.path}");
     return super.onResponse(response, handler);

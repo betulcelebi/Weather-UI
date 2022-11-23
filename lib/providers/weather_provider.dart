@@ -12,18 +12,18 @@ class WeatherProvider with ChangeNotifier {
   String newDate="2022-11-10";
   String? clockIcon;
 
-  getWeatherData(context) async {
+  getWeatherData() async {
     isLoading = true;
     //await Duration(milliseconds: 20);
-    response = await getCurrentData(context);
+    response = await getCurrentData();
     isLoading = false;
     notifyListeners();
   }
 
-  getHourlyWeatherData(context) async {
+  getHourlyWeatherData() async {
     isLoading = true;
     //await Duration(milliseconds: 20);
-    hourlyResponse = await getHourlyData(context);
+    hourlyResponse = await getHourlyData();
     isLoading = false;
     notifyListeners();
   }

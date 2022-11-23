@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:weather_ui/models/hourly_weather_response.dart';
 import 'package:weather_ui/service/logging.dart';
+import 'package:one_context/one_context.dart';
 
 import '../models/current_weather_response.dart';
 import 'package:dio/dio.dart';
@@ -14,7 +15,7 @@ final Dio _dio = Dio(BaseOptions(
     receiveTimeout: 3000))
   ..interceptors.add(Logging());
 
-Future<CurrentWeatherResponse?> getCurrentData(context) async {
+Future<CurrentWeatherResponse?> getCurrentData() async {
   CurrentWeatherResponse? weatherResponse;
   try {
     final response = await _dio.get(
@@ -29,7 +30,7 @@ Future<CurrentWeatherResponse?> getCurrentData(context) async {
   return null;
 }
 
-Future<HourlyWeatherResponse?> getHourlyData(context) async {
+Future<HourlyWeatherResponse?> getHourlyData() async {
   HourlyWeatherResponse? weatherResponse;
   try {
     final response = await _dio.get(

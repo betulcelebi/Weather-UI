@@ -37,8 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
     //   (_) => ShowCaseWidget.of(context).startShowCase([_first, _second]),
     // );
     wetProvider = Provider.of<WeatherProvider>(context, listen: false);
-     wetProvider!.getWeatherData(context);
-    wetProvider!.getHourlyWeatherData(context);
+     wetProvider!.getWeatherData();
+    wetProvider!.getHourlyWeatherData();
   }
 
   // @override

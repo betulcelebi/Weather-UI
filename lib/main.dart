@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:one_context/one_context.dart';
 import 'package:provider/provider.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:weather_ui/pages/home_screen.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
+        builder: OneContext().builder,
         home: ShowCaseWidget(
           builder: Builder(builder: (context) => const HomeScreen()),
         ));
